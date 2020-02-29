@@ -8,7 +8,7 @@ This JS script provides the word data for the hangman-style game.
 var animals = {
   words: [
     {
-      word: "",
+      word: "dog",
       temperament: "",
       description: "",
       img: ""

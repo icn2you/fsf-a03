@@ -73,7 +73,10 @@ var wordGame = {
      - Pick word randomly from game data
      ************************************************************* */  
   pickRandomWord: function() {
-    
+    var index = Math.floor(Math.random() * this.gameData.length);
+
+    this.randomWord = this.gameData[index].word;
+    this.guessesRemaining = this.setNumGuesses(this.randomWord.length);    
   },
 
   /* *************************************************************
@@ -135,8 +138,9 @@ $(document).ready(function() {
 
   $(document).keyup(function(event) {
     // DEBUG
-    alert("You pressed the " + event.key + " key!");
+    // alert("You pressed the " + event.key + " key!");
 
     wordGame.getRandomWord();
+    $("#mystery-word").text(wordGame.getPartialWord());
   });
 });
