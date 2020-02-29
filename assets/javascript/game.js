@@ -11,7 +11,7 @@ var wordGame = {
   description: "...",
   instructions: "Press any key to get started!",
   gameData: [],
-  randomWord: "deoxyribonucleic acid",
+  randomWord: "Deoxyribonucleic Acid",
   guessesRemaining: 0,
   lettersGuessed: [],
   wins: 0,
@@ -76,23 +76,24 @@ var wordGame = {
     var index = Math.floor(Math.random() * this.gameData.length);
 
     this.randomWord = this.gameData[index].word;
-    this.guessesRemaining = this.setNumGuesses(this.randomWord.length);    
+    this.setNumGuesses(this.randomWord.length);
+
+    // DEBUG
+    console.log("word: " + this.randomWord);
   },
 
   /* *************************************************************
      isLtrInWord()
      - Determine if letter user guessed is in word
      ************************************************************* */  
-  isLtrInWord: function() {
-  
-  },
+  isLtrInWord: function(userGuess) {
+    // perform case-insensitive search
+    if (this.randomWord.includes(userGuess) ||
+        this.randomWord.includes(userGuess.toUpperCase())) {
+      return true;
+    }
 
-  /* *************************************************************
-     getLtrsGuessed()
-     - Display letters already guessed by user
-     ************************************************************* */  
-  getLtrsGuessed: function() {
-    
+    return false;
   },
 
   /* *************************************************************
@@ -153,12 +154,22 @@ var wordGame = {
 $(document).ready(function() {
   // Launch the game
   wordGame.setTheme(animals.words);
+  wordGame.pickRandomWord();
+  $("#mystery-word").text(wordGame.getPartialWord());
+  $("#guesses-remaining").text(wordGame.getGuessesRemaining());
 
   $(document).keyup(function(event) {
     // DEBUG
     // alert("You pressed the " + event.key + " key!");
+    if (wordGame.isLtrInWord(event.key)) {
+      console.log("Letter found in word!");
+    } else {
+      console.log("Letter not found in word!");
+    }
 
-    wordGame.getRandomWord();
     $("#mystery-word").text(wordGame.getPartialWord());
+    $("#letters-guessed").text(wordGame.getLettersGuessed());    
+    wordGame.decrementGuesses();
+    $("#guesses-remaining").text(wordGame.getGuessesRemaining());
   });
 });

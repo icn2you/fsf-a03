@@ -8,61 +8,61 @@ This JS script provides the word data for the hangman-style game.
 var animals = {
   words: [
     {
-      word: "dog",
+      word: "Dog",
       temperament: "",
       description: "",
       img: ""
     },
     { 
-      word: "cat",
+      word: "Cat",
       temperament: "",
       description: "",
       img: ""
     },
     {
-      word: "mouse",
+      word: "Mouse",
       temperament: "",
       description: "",
       img: ""
     },
     {
-      word: "horse",
+      word: "Horse",
       temperament: "",
       description: "",
       img: ""
     },
     {
-      word: "bald eagle",
+      word: "Bald Eagle",
       temperament: "",
       description: "",
       img: ""
     },
     {
-      word: "duck-billed platypus",
+      word: "Duck-billed Platypus",
       temperament: "",
       description: "",
       img: ""
     },
     {
-      word: "human",
+      word: "Human",
       temperament: "",
       description: "",
       img: ""
     },
     {
-      word: "elephant",
+      word: "Elephant",
       temperament: "",
       description: "",
       img: ""
     },
     {
-      word: "hippopotamus",
+      word: "Hippopotamus",
       temperament: "",
       description: "",
       img: ""
     },
     {
-      word: "echidna",
+      word: "Echidna",
       temperament: "",
       description: "",
       img: ""
