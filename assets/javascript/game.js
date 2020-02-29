@@ -100,7 +100,25 @@ var wordGame = {
      - Retrieve space holders with any letters guessed correctly
      ************************************************************* */  
   getPartialWord: function() {
-  
+    var word = "";
+
+    for (var i = 0; i < this.randomWord.length; i++) {
+      // DEBUG
+      // console.log(this.randomWord[i]);
+      // console.log("letters guessed:" + this.lettersGuessed);
+      // console.log(this.lettersGuessed.indexOf(this.randomWord[i]));
+
+      if (this.lettersGuessed.indexOf(this.randomWord[i]) > -1)
+        word = word.concat(this.randomWord[i]);
+      else
+        word = word.concat("_");
+    }
+
+    // DEBUG
+    // console.log("--> partial word: " + word);
+    // console.log("--> partial word length: " + word.length);
+
+    return word;
   },
 
   /* *************************************************************
