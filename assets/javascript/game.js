@@ -7,6 +7,7 @@ This JS script implements a game object for a hangman-style game.
 ******************************************************************************/
 function resetableStateFactory() {
   return {
+    // GAME STATE PROPERTIES
     randomObj: {},
     randomWord: "",
     lettersGuessed: [],
@@ -77,8 +78,6 @@ var wordGame = {
     this.gameData = theme;
     
     // DEBUG
-    // console.log("# words: " + this.gameData.length);
-
     // $.each(this.gameData, function(i, word) {
     //   console.log(word.word);
     // });
@@ -94,9 +93,6 @@ var wordGame = {
     this.resetableState.randomObj = this.gameData[index];
     this.resetableState.randomWord = this.resetableState.randomObj.word.toUpperCase();
     this.setNumGuesses(this.resetableState.randomWord.length);
-
-    // DEBUG
-    console.log("word: " + this.resetableState.randomWord);
   },
 
   /* *************************************************************
@@ -113,9 +109,6 @@ var wordGame = {
   },
 
   isLtrInGuesses: function(userGuess) {
-    // DEBUG
-    // console.log(this.resetableState.lettersGuessed);
-
     if (this.resetableState.lettersGuessed.includes(userGuess.toUpperCase())) {
       return true;
     }
@@ -142,28 +135,16 @@ var wordGame = {
     var word = "";
 
     for (var i = 0; i < this.resetableState.randomWord.length; i++) {
-      // DEBUG
-      // console.log("-----");
-      // console.log("letter: " + this.randomWord[i]);
-      // console.log("letters guessed:" + this.lettersGuessed);
-      // console.log("letter in word: " + this.lettersGuessed.indexOf(this.randomWord[i]));
-      // console.log("capital letter in word: " + this.lettersGuessed.indexOf(this.randomWord[i].toUpperCase()));
-
       if (this.resetableState.lettersGuessed.indexOf(this.resetableState.randomWord[i].toUpperCase()) > -1) {
-        // DEBUG
-        // console.log("Match!");
         word = word.concat(this.resetableState.randomWord[i]);
       }  
       else if (this.resetableState.randomWord[i] === " ") {
         word = word.concat(" ");
-      } else {
+      } 
+      else {
         word = word.concat("_");
       }
     }
-
-    // DEBUG
-    // console.log("--> partial word: " + word);
-    // console.log("--> partial word length: " + word.length);
 
     return word;
   },
@@ -190,9 +171,6 @@ var wordGame = {
      ************************************************************* */
   setNumGuesses: function(wordLength) {
     this.resetableState.guessesRemaining = 2 * wordLength;
-      
-    // DEBUG
-    // console.log("--> guesses remaining: " + this.guessesRemaining);
   },  
 
   /* *************************************************************
@@ -257,21 +235,18 @@ $(document).ready(function() {
         event.key.substr(0, 2) === "F9" ||
         event.key.substr(0, 4) === "Page") { 
       return;
-    } else if (event.key.match("[a-zA-Z\-]")) {
-      // Only accept valid user input.
-
+    }
+    // Only accept valid user input. 
+    else if (event.key.match("[a-zA-Z\-]")) {
       if(wordGame.isLtrInGuesses(event.key)) {
         $("#game-feedback").text("Letter already guessed.");
         return;
       }
 
       if (wordGame.isLtrInWord(event.key)) {
-        // DEBUG
-        // console.log("Letter found in word!");
         $("#game-feedback").text("Great job! Keep going.");
-      } else {
-        // DEBUG
-        // console.log("Letter not found in word!");
+      } 
+      else {
         $("#game-feedback").text("Oops! Bad guess. Try again.");
       }
 
@@ -288,21 +263,19 @@ $(document).ready(function() {
         wordGame.incrementWins();
         $("#player-wins").text(wordGame.getWins());
 
-        var animal = wordGame.getRandomObj();
-        // DEBUG
-        // console.log(animal);
+        var randomObj = wordGame.getRandomObj();
 
         $("#winning-prize").append("<figure>");
         $("#winning-prize > figure").append("<img>");
-        $("#winning-prize img").attr("src", animal.img);
-        $("#winning-prize img").attr("alt", animal.word);
+        $("#winning-prize img").attr("src", randomObj.img);
+        $("#winning-prize img").attr("alt", randomObj.word);
         $("#winning-prize > figure").append("<figcaption>");
-        $("#winning-prize figcaption").text(animal.word);
+        $("#winning-prize figcaption").text(randomObj.word);
         $("#winning-prize").append("<details>");
         $("#winning-prize details").append("<h3>");
-        $("#winning-prize details > h3").text(animal.temperament);
+        $("#winning-prize details > h3").text(randomObj.temperament);
         $("#winning-prize details").append("<p>");
-        $("#winning-prize details > p").text(animal.description);
+        $("#winning-prize details > p").text(randomObj.description);
         $("#game-feedback").text("WE HAVE A WINNER!");
       }
       // Check for loss.
@@ -311,14 +284,16 @@ $(document).ready(function() {
         $("#game-feedback").text("You lost this round. Better luck next time.");
       }
 
+      // Check if game is over.
       if (wordGame.getGameOver()) {
         $("footer").append("<button>");
         $("footer > button").attr("type", "button");
         $("footer > button").text("Play Again!");
       }
 
-    } else {
-      // Notify user input was invalid.
+    }
+    // Notify user input was invalid. 
+    else {
       $("#game-feedback").text("Oops! Invalid character pressed. Try again.");
     }
   });
@@ -326,9 +301,6 @@ $(document).ready(function() {
   // If user requests another game, reset playing field.
   $(document).on("click", function(event) {
     if (event.target.type === "button") {
-      // DEBUG
-      // alert(event.target + " button clicked.");
-    
       wordGame.resetGameState();
       wordGame.pickRandomWord();
 
