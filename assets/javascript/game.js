@@ -3,9 +3,9 @@ FSWD:  Christopher B. Zenner
 Date:  02/29/2020
 File:  game.js
 Ver.:  0.1.0 20200229
-This JS script implements a game object for a hangman-style game.
+This JS script implements a game object for a hangman-style game with a .
 ******************************************************************************/
-function resetableStateFactory() {
+function resettableStateFactory() {
   return {
     // GAME STATE PROPERTIES
     randomObj: {},
@@ -22,8 +22,9 @@ var wordGame = {
   description: "...",
   instructions: "Press any key to get started!",
   gameData: [],
+  losses: 0,
   wins: 0,
-  resetableState: resetableStateFactory(),
+  resettableState: resettableStateFactory(),
 
   // METHODS
   /* *************************************************************
@@ -47,19 +48,19 @@ var wordGame = {
   },
 
   getRandomObj: function() {
-    return this.resetableState.randomObj;
+    return this.resettableState.randomObj;
   },
 
   getRandomWord: function() {
-    return this.resetableState.randomWord;
+    return this.resettableState.randomWord;
   },
 
   getLettersGuessed: function() {
-    return this.resetableState.lettersGuessed;
+    return this.resettableState.lettersGuessed;
   },
 
   getGuessesRemaining: function() {
-    return this.resetableState.guessesRemaining;
+    return this.resettableState.guessesRemaining;
   },
 
   getWins: function() {
@@ -67,7 +68,7 @@ var wordGame = {
   },
 
   getGameOver: function() {
-    return this.resetableState.gameOver;
+    return this.resettableState.gameOver;
   },
 
   /* *************************************************************
@@ -90,9 +91,9 @@ var wordGame = {
   pickRandomWord: function() {
     var index = Math.floor(Math.random() * this.gameData.length);
 
-    this.resetableState.randomObj = this.gameData[index];
-    this.resetableState.randomWord = this.resetableState.randomObj.word.toUpperCase();
-    this.setNumGuesses(this.resetableState.randomWord.length);
+    this.resettableState.randomObj = this.gameData[index];
+    this.resettableState.randomWord = this.resettableState.randomObj.word.toUpperCase();
+    this.setNumGuesses(this.resettableState.randomWord.length);
   },
 
   /* *************************************************************
@@ -101,7 +102,7 @@ var wordGame = {
      TODO: Implement case-insensitive search. (02/29/2020)
      ************************************************************* */  
   isLtrInWord: function(userGuess) {
-    if (this.resetableState.randomWord.includes(userGuess.toUpperCase())) {
+    if (this.resettableState.randomWord.includes(userGuess.toUpperCase())) {
       return true;
     }
 
@@ -109,7 +110,7 @@ var wordGame = {
   },
 
   isLtrInGuesses: function(userGuess) {
-    if (this.resetableState.lettersGuessed.includes(userGuess.toUpperCase())) {
+    if (this.resettableState.lettersGuessed.includes(userGuess.toUpperCase())) {
       return true;
     }
 
@@ -123,7 +124,7 @@ var wordGame = {
   addGuessToList: function(userGuess) {
     // Double check that user guess is not in letters guessed already.
     if (!(this.isLtrInGuesses(userGuess.toUpperCase()))) {
-      this.resetableState.lettersGuessed.push(userGuess.toUpperCase());
+      this.resettableState.lettersGuessed.push(userGuess.toUpperCase());
     }
   },
 
@@ -134,11 +135,11 @@ var wordGame = {
   getPartialWord: function() {
     var word = "";
 
-    for (var i = 0; i < this.resetableState.randomWord.length; i++) {
-      if (this.resetableState.lettersGuessed.indexOf(this.resetableState.randomWord[i].toUpperCase()) > -1) {
-        word = word.concat(this.resetableState.randomWord[i]);
+    for (var i = 0; i < this.resettableState.randomWord.length; i++) {
+      if (this.resettableState.lettersGuessed.indexOf(this.resettableState.randomWord[i].toUpperCase()) > -1) {
+        word = word.concat(this.resettableState.randomWord[i]);
       }  
-      else if (this.resetableState.randomWord[i] === " ") {
+      else if (this.resettableState.randomWord[i] === " ") {
         word = word.concat(" ");
       } 
       else {
@@ -154,7 +155,7 @@ var wordGame = {
      - Decrement number of guesses remaining
      ************************************************************* */
   decrementGuesses: function() {
-    this.resetableState.guessesRemaining--;
+    this.resettableState.guessesRemaining--;
   },
 
   /* *************************************************************
@@ -170,7 +171,7 @@ var wordGame = {
      - Set number of guesses based on word length
      ************************************************************* */
   setNumGuesses: function(wordLength) {
-    this.resetableState.guessesRemaining = 2 * wordLength;
+    this.resettableState.guessesRemaining = Math.min(27, (2 * wordLength));
   },  
 
   /* *************************************************************
@@ -178,7 +179,7 @@ var wordGame = {
      - Conclude game
      ************************************************************* */  
   setGameOver: function() {
-    this.resetableState.gameOver = true;
+    this.resettableState.gameOver = true;
   },
   
   /* *************************************************************
@@ -186,7 +187,7 @@ var wordGame = {
      - Conclude game
      ************************************************************* */  
   resetGameState: function() {
-    this.resetableState = resetableStateFactory();
+    this.resettableState = resettableStateFactory();
   }    
 };
 
