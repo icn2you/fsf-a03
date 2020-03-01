@@ -11,10 +11,12 @@ var wordGame = {
   description: "...",
   instructions: "Press any key to get started!",
   gameData: [],
-  randomWord: "Deoxyribonucleic Acid",
-  guessesRemaining: 0,
+  randomObj: {},
+  randomWord: "",
   lettersGuessed: [],
+  guessesRemaining: 0,
   wins: 0,
+  gameOver: false,
 
   // METHODS
   /* *************************************************************
@@ -37,20 +39,28 @@ var wordGame = {
     return this.gameData;
   },
 
-  getRandomWord: function() {
-    return this.randomWord;
+  getRandomObj: function() {
+    return this.randomObj;
   },
 
-  getGuessesRemaining: function() {
-    return this.guessesRemaining;
+  getRandomWord: function() {
+    return this.randomWord;
   },
 
   getLettersGuessed: function() {
     return this.lettersGuessed;
   },
 
+  getGuessesRemaining: function() {
+    return this.guessesRemaining;
+  },
+
   getWins: function() {
     return this.wins;
+  },
+
+  getGameOver: function() {
+    return this.gameOver;
   },
 
   /* *************************************************************
@@ -75,7 +85,8 @@ var wordGame = {
   pickRandomWord: function() {
     var index = Math.floor(Math.random() * this.gameData.length);
 
-    this.randomWord = this.gameData[index].word.toUpperCase();
+    this.randomObj = this.gameData[index];
+    this.randomWord = this.randomObj.word.toUpperCase();
     this.setNumGuesses(this.randomWord.length);
 
     // DEBUG
@@ -96,6 +107,9 @@ var wordGame = {
   },
 
   isLtrInGuesses: function(userGuess) {
+    // DEBUG
+    console.log(this.lettersGuessed);
+
     if (this.lettersGuessed.includes(userGuess.toUpperCase())) {
       return true;
     }
@@ -108,7 +122,9 @@ var wordGame = {
      - Add letter to list of letters guessed
      ************************************************************* */  
   addGuessToList: function(userGuess) {
-    this.lettersGuessed.push(userGuess.toUpperCase());
+    if (!(this.isLtrInGuesses(userGuess.toUpperCase()))) {
+      this.lettersGuessed.push(userGuess.toUpperCase());
+    }
   },
 
   /* *************************************************************
@@ -131,7 +147,9 @@ var wordGame = {
         // console.log("Match!");
         word = word.concat(this.randomWord[i]);
       }  
-      else {
+      else if (this.randomWord[i] === " ") {
+        word = word.concat(" ");
+      } else {
         word = word.concat("_");
       }
     }
@@ -141,14 +159,6 @@ var wordGame = {
     // console.log("--> partial word length: " + word.length);
 
     return word;
-  },
-
-  /* *************************************************************
-     incrementWins()
-     - Increment number of games won by player
-     ************************************************************* */  
-  incrementWins: function() {
-    this.wins++;
   },
 
   /* *************************************************************
@@ -168,7 +178,23 @@ var wordGame = {
      ************************************************************* */
   decrementGuesses: function() {
     this.guessesRemaining--;
-  }
+  },
+
+  /* *************************************************************
+     incrementWins()
+     - Increment number of games won by player
+     ************************************************************* */  
+  incrementWins: function() {
+    this.wins++;
+  },
+
+  /* *************************************************************
+     setGameOver()
+     - Conclude game
+     ************************************************************* */  
+  setGameOver: function() {
+    this.gameOver = true;
+  }  
 };
 
 // Execute script once page is fully loaded
@@ -184,11 +210,13 @@ $(document).ready(function() {
   $(document).keyup(function(event) {
     // DEBUG
     // alert("You pressed the " + event.key + " key!");
-    
-    // Ignore scrupulous users trying to input capital letters
-    // and other non-sense characters!
-    // TODO: Find a more elegant way to do this! (02/29/2020)
-    if (event.key === "Shift" ||
+   
+    // Don't allow further input if game is over.
+    if (wordGame.getGameOver() ||
+        // Ignore scrupulous users trying to input capital letters!  
+        event.key === "Shift" ||
+        // ... and other non-printing characters ...
+        // TODO: Find a more elegant way to do this! (02/29/2020)
         event.key === "Alt" ||
         event.key === "Backspace" ||
         event.key === "CapsLock" ||
@@ -214,29 +242,70 @@ $(document).ready(function() {
       return;
     } else if (event.key.match("[a-zA-Z\-]")) {
       // Only accept valid user input.
+
+      if(wordGame.isLtrInGuesses(event.key)) {
+        $("#game-feedback").text("Letter already guessed.");
+        return;
+      }
+
       if (wordGame.isLtrInWord(event.key)) {
         // DEBUG
         // console.log("Letter found in word!");
-        if (!(wordGame.isLtrInGuesses(event.key))) {
-          wordGame.decrementGuesses();   
-          wordGame.addGuessToList(event.key);
-          $("#game-feedback").text("Great job! Keep going.");
-        } else {
-          $("#game-feedback").text("Letter already guessed.");
-        }
+        $("#game-feedback").text("Great job! Keep going.");
       } else {
         // DEBUG
         // console.log("Letter not found in word!");
-        wordGame.decrementGuesses();
         $("#game-feedback").text("Oops! Bad guess. Try again.");
       }
+
+      wordGame.decrementGuesses();   
+      wordGame.addGuessToList(event.key);
 
       $("#mystery-word").text(wordGame.getPartialWord());
       $("#letters-guessed").text(wordGame.getLettersGuessed());
       $("#guesses-remaining").text(wordGame.getGuessesRemaining());
+
+      // Check for a win!
+      if (!wordGame.getPartialWord().includes("_")) {
+        wordGame.setGameOver();
+        wordGame.incrementWins();
+
+        var animal = wordGame.getRandomObj();
+        // DEBUG
+        // console.log(animal);
+
+        $("#winning-prize > figure").append("<img>");
+        $("#winning-prize img").attr("src", animal.img);
+        $("#winning-prize img").attr("alt", animal.word);
+        $("#winning-prize > figure").append("<figcaption>");
+        $("#winning-prize figcaption").text(animal.word);
+        $("#winning-prize").append("<details>");
+        $("#winning-prize details").append("<h3>");
+        $("#winning-prize details > h3").text(animal.temperament);
+        $("#winning-prize details").append("<p>");
+        $("#winning-prize details > p").text(animal.description);
+        $("#game-feedback").text("WE HAVE A WINNER!");
+      }
+      // Check for loss.
+      else if (wordGame.getGuessesRemaining() < 1) {
+        wordGame.setGameOver();
+        $("#game-feedback").text("You lost this round. Better luck next time.");
+      }
+
+      if (wordGame.getGameOver()) {
+        $("footer").append("<button>");
+        $("footer > button").attr("type", "button");
+        $("footer > button").text("Play Again!");
+      }
+
     } else {
       // Notify user input was invalid.
       $("#game-feedback").text("Oops! Invalid character pressed. Try again.");
     }
   });
+
+  $(document).on("click", function(event) {
+    if (event.target.type === "button")
+      alert(event.target + " button clicked.");
+  });  
 });

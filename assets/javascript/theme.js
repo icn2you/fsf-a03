@@ -9,63 +9,63 @@ var animals = {
   words: [
     {
       word: "Dog",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     },
     { 
       word: "Cat",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     },
     {
       word: "Mouse",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     },
     {
       word: "Horse",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     },
     {
       word: "Bald Eagle",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     },
     {
       word: "Duck-billed Platypus",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     },
     {
       word: "Human",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     },
     {
       word: "Elephant",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     },
     {
       word: "Hippopotamus",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     },
     {
       word: "Echidna",
-      temperament: "",
-      description: "",
-      img: ""
+      temperament: "lorem, ipsum, dolor",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non laborum minus saepe tempora quo doloremque quam voluptate nostrum dolorum similique. Sit doloribus cum ipsa quidem. Quisquam deserunt enim eos fugit.",
+      img: "https://via.placeholder.com/300.png"
     }
   ]
 };
