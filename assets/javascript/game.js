@@ -5,6 +5,8 @@ File:  game.js
 Ver.:  0.1.0 20200229
 This JS script implements a game object for a hangman-style game with a .
 ******************************************************************************/
+const maxGuesses = 24;
+
 function resettableStateFactory() {
   return {
     // GAME STATE PROPERTIES
@@ -61,6 +63,10 @@ var wordGame = {
 
   getGuessesRemaining: function() {
     return this.resettableState.guessesRemaining;
+  },
+
+  getLosses: function() {
+    return this.losses;
   },
 
   getWins: function() {
@@ -162,6 +168,14 @@ var wordGame = {
      incrementWins()
      - Increment number of games won by player
      ************************************************************* */  
+  incrementLosses: function() {
+    this.losses++;
+  },
+
+  /* *************************************************************
+     incrementWins()
+     - Increment number of games won by player
+     ************************************************************* */  
   incrementWins: function() {
     this.wins++;
   },
@@ -171,7 +185,7 @@ var wordGame = {
      - Set number of guesses based on word length
      ************************************************************* */
   setNumGuesses: function(wordLength) {
-    this.resettableState.guessesRemaining = Math.min(27, (2 * wordLength));
+    this.resettableState.guessesRemaining = Math.min(maxGuesses, (2 * wordLength));
   },  
 
   /* *************************************************************
@@ -262,7 +276,6 @@ $(document).ready(function() {
       if (!wordGame.getPartialWord().includes("_")) {
         wordGame.setGameOver();
         wordGame.incrementWins();
-        $("#player-wins").text(wordGame.getWins());
 
         var randomObj = wordGame.getRandomObj();
 
@@ -282,8 +295,13 @@ $(document).ready(function() {
       // Check for loss.
       else if (wordGame.getGuessesRemaining() < 1) {
         wordGame.setGameOver();
+        wordGame.incrementLosses();
         $("#game-feedback").text("You lost this round. Better luck next time.");
       }
+
+      var gamesPlayed = wordGame.getWins() + wordGame.getLosses();
+
+      $("#player-wins").text(wordGame.getWins() + " out of " + gamesPlayed + " game(s)" );
 
       // Check if game is over.
       if (wordGame.getGameOver()) {
