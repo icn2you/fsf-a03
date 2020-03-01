@@ -95,6 +95,14 @@ var wordGame = {
     return false;
   },
 
+  isLtrInGuesses: function(userGuess) {
+    if (this.lettersGuessed.includes(userGuess.toUpperCase())) {
+      return true;
+    }
+
+    return false;
+  },
+
   /* *************************************************************
      addGuessToList()
      - Add letter to list of letters guessed
@@ -168,7 +176,7 @@ $(document).ready(function() {
   // Launch the game
   wordGame.setTheme(animals.words);
   wordGame.pickRandomWord();
-  
+
   $("#game-name").text(wordGame.getName());
   $("#mystery-word").text(wordGame.getPartialWord());
   $("#guesses-remaining").text(wordGame.getGuessesRemaining());
@@ -176,20 +184,59 @@ $(document).ready(function() {
   $(document).keyup(function(event) {
     // DEBUG
     // alert("You pressed the " + event.key + " key!");
-    if (wordGame.isLtrInWord(event.key)) {
-      // DEBUG
-      // console.log("Letter found in word!");
-      wordGame.addGuessToList(event.key);
-      $("#game-feedback").text("Great job! Keep going.");
-    } else {
-      // DEBUG
-      // console.log("Letter not found in word!");
-      $("#game-feedback").text("Oops! Bad guess. Try again.");
-    }
+    
+    // Ignore scrupulous users trying to input capital letters
+    // and other non-sense characters!
+    // TODO: Find a more elegant way to do this! (02/29/2020)
+    if (event.key === "Shift" ||
+        event.key === "Alt" ||
+        event.key === "Backspace" ||
+        event.key === "CapsLock" ||
+        event.key === "Control" ||
+        event.key === "Delete" ||
+        event.key === "Home" ||
+        event.key === "End" ||
+        event.key === "Enter" ||
+        event.key === "Escape" ||
+        event.key === "Home" ||
+        event.key === "Meta" ||
+        event.key.substr(0, 5) === "Arrow" ||
+        event.key.substr(0, 2) === "F1" ||
+        event.key.substr(0, 2) === "F2" ||
+        event.key.substr(0, 2) === "F3" ||
+        event.key.substr(0, 2) === "F4" ||
+        event.key.substr(0, 2) === "F5" ||
+        event.key.substr(0, 2) === "F6" ||
+        event.key.substr(0, 2) === "F7" ||
+        event.key.substr(0, 2) === "F8" ||
+        event.key.substr(0, 2) === "F9" ||
+        event.key.substr(0, 4) === "Page") { 
+      return;
+    } else if (event.key.match("[a-zA-Z\-]")) {
+      // Only accept valid user input.
+      if (wordGame.isLtrInWord(event.key)) {
+        // DEBUG
+        // console.log("Letter found in word!");
+        if (!(wordGame.isLtrInGuesses(event.key))) {
+          wordGame.decrementGuesses();   
+          wordGame.addGuessToList(event.key);
+          $("#game-feedback").text("Great job! Keep going.");
+        } else {
+          $("#game-feedback").text("Letter already guessed.");
+        }
+      } else {
+        // DEBUG
+        // console.log("Letter not found in word!");
+        wordGame.decrementGuesses();
+        $("#game-feedback").text("Oops! Bad guess. Try again.");
+      }
 
-    $("#mystery-word").text(wordGame.getPartialWord());
-    $("#letters-guessed").text(wordGame.getLettersGuessed());    
-    wordGame.decrementGuesses();
-    $("#guesses-remaining").text(wordGame.getGuessesRemaining());
+      $("#mystery-word").text(wordGame.getPartialWord());
+      $("#letters-guessed").text(wordGame.getLettersGuessed());
+      $("#guesses-remaining").text(wordGame.getGuessesRemaining());
+    } else {
+      // Notify user input was invalid.
+      $("#game-feedback").text("Oops! Invalid character pressed. Try again.");
+    }
   });
 });
