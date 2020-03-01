@@ -75,7 +75,7 @@ var wordGame = {
   pickRandomWord: function() {
     var index = Math.floor(Math.random() * this.gameData.length);
 
-    this.randomWord = this.gameData[index].word;
+    this.randomWord = this.gameData[index].word.toUpperCase();
     this.setNumGuesses(this.randomWord.length);
 
     // DEBUG
@@ -85,15 +85,22 @@ var wordGame = {
   /* *************************************************************
      isLtrInWord()
      - Determine if letter user guessed is in word
+     TODO: Implement case-insensitive search. (02/29/2020)
      ************************************************************* */  
   isLtrInWord: function(userGuess) {
-    // perform case-insensitive search
-    if (this.randomWord.includes(userGuess) ||
-        this.randomWord.includes(userGuess.toUpperCase())) {
+    if (this.randomWord.includes(userGuess.toUpperCase())) {
       return true;
     }
 
     return false;
+  },
+
+  /* *************************************************************
+     addGuessToList()
+     - Add letter to list of letters guessed
+     ************************************************************* */  
+  addGuessToList: function(userGuess) {
+    this.lettersGuessed.push(userGuess.toUpperCase());
   },
 
   /* *************************************************************
@@ -105,14 +112,20 @@ var wordGame = {
 
     for (var i = 0; i < this.randomWord.length; i++) {
       // DEBUG
-      // console.log(this.randomWord[i]);
+      // console.log("-----");
+      // console.log("letter: " + this.randomWord[i]);
       // console.log("letters guessed:" + this.lettersGuessed);
-      // console.log(this.lettersGuessed.indexOf(this.randomWord[i]));
+      // console.log("letter in word: " + this.lettersGuessed.indexOf(this.randomWord[i]));
+      // console.log("capital letter in word: " + this.lettersGuessed.indexOf(this.randomWord[i].toUpperCase()));
 
-      if (this.lettersGuessed.indexOf(this.randomWord[i]) > -1)
+      if (this.lettersGuessed.indexOf(this.randomWord[i].toUpperCase()) > -1) {
+        // DEBUG
+        // console.log("Match!");
         word = word.concat(this.randomWord[i]);
-      else
+      }  
+      else {
         word = word.concat("_");
+      }
     }
 
     // DEBUG
@@ -155,6 +168,8 @@ $(document).ready(function() {
   // Launch the game
   wordGame.setTheme(animals.words);
   wordGame.pickRandomWord();
+  
+  $("#game-name").text(wordGame.getName());
   $("#mystery-word").text(wordGame.getPartialWord());
   $("#guesses-remaining").text(wordGame.getGuessesRemaining());
 
@@ -162,9 +177,14 @@ $(document).ready(function() {
     // DEBUG
     // alert("You pressed the " + event.key + " key!");
     if (wordGame.isLtrInWord(event.key)) {
-      console.log("Letter found in word!");
+      // DEBUG
+      // console.log("Letter found in word!");
+      wordGame.addGuessToList(event.key);
+      $("#game-feedback").text("Great job! Keep going.");
     } else {
-      console.log("Letter not found in word!");
+      // DEBUG
+      // console.log("Letter not found in word!");
+      $("#game-feedback").text("Oops! Bad guess. Try again.");
     }
 
     $("#mystery-word").text(wordGame.getPartialWord());
