@@ -20,7 +20,7 @@ function resettableStateFactory() {
 
 var wordGame = {
   // PROPERTIES
-  name: "Guess That Dog Breed!",
+  name: "Guess That Canine Kid!",
   description: "This game randomly presents one of the top 25 dog breeds for the user to guess.",
   instructions: "Press any letter to begin.",
   gameData: [],
@@ -98,7 +98,7 @@ var wordGame = {
     var index = Math.floor(Math.random() * this.gameData.length);
 
     this.resettableState.randomObj = this.gameData[index];
-    this.resettableState.randomWord = this.resettableState.randomObj.name.toUpperCase();
+    this.resettableState.randomWord = this.resettableState.randomObj.word.toUpperCase();
     this.setNumGuesses(this.resettableState.randomWord.length);
   },
 
@@ -283,9 +283,9 @@ $(document).ready(function() {
         $("#winning-prize").append("<figure>");
         $("#winning-prize > figure").append("<img>");
         $("#winning-prize img").attr("src", randomObj.img);
-        $("#winning-prize img").attr("alt", randomObj.name);
+        $("#winning-prize img").attr("alt", randomObj.word);
         $("#winning-prize > figure").append("<figcaption>");
-        $("#winning-prize figcaption").text(randomObj.name);
+        $("#winning-prize figcaption").text(randomObj.word);
         $("#winning-prize").append("<details>");
         $("#winning-prize details").append("<h3>");
         $("#winning-prize details > h3").text(randomObj.temperament);
