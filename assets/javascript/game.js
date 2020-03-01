@@ -20,9 +20,9 @@ function resettableStateFactory() {
 
 var wordGame = {
   // PROPERTIES
-  name: "Sorta Hangman",
-  description: "...",
-  instructions: "Press any key to get started!",
+  name: "Guess That Dog Breed!",
+  description: "This game randomly presents one of the top 25 dog breeds for the user to guess.",
+  instructions: "Press any letter to begin.",
   gameData: [],
   losses: 0,
   wins: 0,
@@ -86,7 +86,7 @@ var wordGame = {
     
     // DEBUG
     // $.each(this.gameData, function(i, word) {
-    //   console.log(word.word);
+    //   console.log(word.name);
     // });
   },
 
@@ -98,7 +98,7 @@ var wordGame = {
     var index = Math.floor(Math.random() * this.gameData.length);
 
     this.resettableState.randomObj = this.gameData[index];
-    this.resettableState.randomWord = this.resettableState.randomObj.word.toUpperCase();
+    this.resettableState.randomWord = this.resettableState.randomObj.name.toUpperCase();
     this.setNumGuesses(this.resettableState.randomWord.length);
   },
 
@@ -205,7 +205,7 @@ var wordGame = {
   }    
 };
 
-wordGame.setTheme(animals.words);
+wordGame.setTheme(canines.breeds);
 
 // Execute script once page is fully loaded
 $(document).ready(function() {
@@ -216,6 +216,7 @@ $(document).ready(function() {
   $("#mystery-word").text(wordGame.getPartialWord());
   $("#guesses-remaining").text(wordGame.getGuessesRemaining());
   $("#player-wins").text(wordGame.getWins());
+  $("#game-feedback").text(wordGame.getInstructions());
 
   $(document).keyup(function(event) {
     // DEBUG
@@ -282,9 +283,9 @@ $(document).ready(function() {
         $("#winning-prize").append("<figure>");
         $("#winning-prize > figure").append("<img>");
         $("#winning-prize img").attr("src", randomObj.img);
-        $("#winning-prize img").attr("alt", randomObj.word);
+        $("#winning-prize img").attr("alt", randomObj.name);
         $("#winning-prize > figure").append("<figcaption>");
-        $("#winning-prize figcaption").text(randomObj.word);
+        $("#winning-prize figcaption").text(randomObj.name);
         $("#winning-prize").append("<details>");
         $("#winning-prize details").append("<h3>");
         $("#winning-prize details > h3").text(randomObj.temperament);
