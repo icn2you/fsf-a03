@@ -5,18 +5,24 @@ File:  game.js
 Ver.:  0.1.0 20200229
 This JS script implements a game object for a hangman-style game.
 ******************************************************************************/
+function resetableStateFactory() {
+  return {
+    randomObj: {},
+    randomWord: "",
+    lettersGuessed: [],
+    guessesRemaining: 0,
+    gameOver: false
+  };
+};
+
 var wordGame = {
   // PROPERTIES
   name: "Sorta Hangman",
   description: "...",
   instructions: "Press any key to get started!",
   gameData: [],
-  randomObj: {},
-  randomWord: "",
-  lettersGuessed: [],
-  guessesRemaining: 0,
   wins: 0,
-  gameOver: false,
+  resetableState: resetableStateFactory(),
 
   // METHODS
   /* *************************************************************
@@ -40,19 +46,19 @@ var wordGame = {
   },
 
   getRandomObj: function() {
-    return this.randomObj;
+    return this.resetableState.randomObj;
   },
 
   getRandomWord: function() {
-    return this.randomWord;
+    return this.resetableState.randomWord;
   },
 
   getLettersGuessed: function() {
-    return this.lettersGuessed;
+    return this.resetableState.lettersGuessed;
   },
 
   getGuessesRemaining: function() {
-    return this.guessesRemaining;
+    return this.resetableState.guessesRemaining;
   },
 
   getWins: function() {
@@ -60,7 +66,7 @@ var wordGame = {
   },
 
   getGameOver: function() {
-    return this.gameOver;
+    return this.resetableState.gameOver;
   },
 
   /* *************************************************************
@@ -85,12 +91,12 @@ var wordGame = {
   pickRandomWord: function() {
     var index = Math.floor(Math.random() * this.gameData.length);
 
-    this.randomObj = this.gameData[index];
-    this.randomWord = this.randomObj.word.toUpperCase();
-    this.setNumGuesses(this.randomWord.length);
+    this.resetableState.randomObj = this.gameData[index];
+    this.resetableState.randomWord = this.resetableState.randomObj.word.toUpperCase();
+    this.setNumGuesses(this.resetableState.randomWord.length);
 
     // DEBUG
-    console.log("word: " + this.randomWord);
+    console.log("word: " + this.resetableState.randomWord);
   },
 
   /* *************************************************************
@@ -99,7 +105,7 @@ var wordGame = {
      TODO: Implement case-insensitive search. (02/29/2020)
      ************************************************************* */  
   isLtrInWord: function(userGuess) {
-    if (this.randomWord.includes(userGuess.toUpperCase())) {
+    if (this.resetableState.randomWord.includes(userGuess.toUpperCase())) {
       return true;
     }
 
@@ -108,9 +114,9 @@ var wordGame = {
 
   isLtrInGuesses: function(userGuess) {
     // DEBUG
-    console.log(this.lettersGuessed);
+    // console.log(this.resetableState.lettersGuessed);
 
-    if (this.lettersGuessed.includes(userGuess.toUpperCase())) {
+    if (this.resetableState.lettersGuessed.includes(userGuess.toUpperCase())) {
       return true;
     }
 
@@ -122,8 +128,9 @@ var wordGame = {
      - Add letter to list of letters guessed
      ************************************************************* */  
   addGuessToList: function(userGuess) {
+    // Double check that user guess is not in letters guessed already.
     if (!(this.isLtrInGuesses(userGuess.toUpperCase()))) {
-      this.lettersGuessed.push(userGuess.toUpperCase());
+      this.resetableState.lettersGuessed.push(userGuess.toUpperCase());
     }
   },
 
@@ -134,7 +141,7 @@ var wordGame = {
   getPartialWord: function() {
     var word = "";
 
-    for (var i = 0; i < this.randomWord.length; i++) {
+    for (var i = 0; i < this.resetableState.randomWord.length; i++) {
       // DEBUG
       // console.log("-----");
       // console.log("letter: " + this.randomWord[i]);
@@ -142,12 +149,12 @@ var wordGame = {
       // console.log("letter in word: " + this.lettersGuessed.indexOf(this.randomWord[i]));
       // console.log("capital letter in word: " + this.lettersGuessed.indexOf(this.randomWord[i].toUpperCase()));
 
-      if (this.lettersGuessed.indexOf(this.randomWord[i].toUpperCase()) > -1) {
+      if (this.resetableState.lettersGuessed.indexOf(this.resetableState.randomWord[i].toUpperCase()) > -1) {
         // DEBUG
         // console.log("Match!");
-        word = word.concat(this.randomWord[i]);
+        word = word.concat(this.resetableState.randomWord[i]);
       }  
-      else if (this.randomWord[i] === " ") {
+      else if (this.resetableState.randomWord[i] === " ") {
         word = word.concat(" ");
       } else {
         word = word.concat("_");
@@ -162,22 +169,11 @@ var wordGame = {
   },
 
   /* *************************************************************
-     setNumGuesses()
-     - Set number of guesses based on word length
-     ************************************************************* */
-  setNumGuesses: function(wordLength) {
-    this.guessesRemaining = 2 * wordLength;
-    
-    // DEBUG
-    // console.log("--> guesses remaining: " + this.guessesRemaining);
-  },
-
-  /* *************************************************************
      decrementGuesses()
      - Decrement number of guesses remaining
      ************************************************************* */
   decrementGuesses: function() {
-    this.guessesRemaining--;
+    this.resetableState.guessesRemaining--;
   },
 
   /* *************************************************************
@@ -189,23 +185,44 @@ var wordGame = {
   },
 
   /* *************************************************************
+     setNumGuesses()
+     - Set number of guesses based on word length
+     ************************************************************* */
+  setNumGuesses: function(wordLength) {
+    this.resetableState.guessesRemaining = 2 * wordLength;
+      
+    // DEBUG
+    // console.log("--> guesses remaining: " + this.guessesRemaining);
+  },  
+
+  /* *************************************************************
      setGameOver()
      - Conclude game
      ************************************************************* */  
   setGameOver: function() {
-    this.gameOver = true;
-  }  
+    this.resetableState.gameOver = true;
+  },
+  
+  /* *************************************************************
+     resetGameState()
+     - Conclude game
+     ************************************************************* */  
+  resetGameState: function() {
+    this.resetableState = resetableStateFactory();
+  }    
 };
+
+wordGame.setTheme(animals.words);
 
 // Execute script once page is fully loaded
 $(document).ready(function() {
   // Launch the game
-  wordGame.setTheme(animals.words);
   wordGame.pickRandomWord();
 
   $("#game-name").text(wordGame.getName());
   $("#mystery-word").text(wordGame.getPartialWord());
   $("#guesses-remaining").text(wordGame.getGuessesRemaining());
+  $("#player-wins").text(wordGame.getWins());
 
   $(document).keyup(function(event) {
     // DEBUG
@@ -269,11 +286,13 @@ $(document).ready(function() {
       if (!wordGame.getPartialWord().includes("_")) {
         wordGame.setGameOver();
         wordGame.incrementWins();
+        $("#player-wins").text(wordGame.getWins());
 
         var animal = wordGame.getRandomObj();
         // DEBUG
         // console.log(animal);
 
+        $("#winning-prize").append("<figure>");
         $("#winning-prize > figure").append("<img>");
         $("#winning-prize img").attr("src", animal.img);
         $("#winning-prize img").attr("alt", animal.word);
@@ -304,8 +323,21 @@ $(document).ready(function() {
     }
   });
 
+  // If user requests another game, reset playing field.
   $(document).on("click", function(event) {
-    if (event.target.type === "button")
-      alert(event.target + " button clicked.");
+    if (event.target.type === "button") {
+      // DEBUG
+      // alert(event.target + " button clicked.");
+    
+      wordGame.resetGameState();
+      wordGame.pickRandomWord();
+
+      $("#winning-prize").empty();
+      $("#mystery-word").text(wordGame.getPartialWord());
+      $("#letters-guessed").text(wordGame.getLettersGuessed());
+      $("#guesses-remaining").text(wordGame.getGuessesRemaining());
+      $("#game-feedback").empty();
+      $("footer").empty();
+    }
   });  
 });
