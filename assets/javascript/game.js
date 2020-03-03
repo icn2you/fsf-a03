@@ -3,9 +3,11 @@ FSWD:  Christopher B. Zenner
 Date:  02/29/2020
 File:  game.js
 Ver.:  0.1.0 20200229
-This JS script implements a game object for a hangman-style game with a .
+       0.2.0 20200302
+This JS script implements a hangman-style game with a changeable dataset.
 ******************************************************************************/
-const maxGuesses = 24;
+const maxGuesses = 20;
+const willy = "assets/images/willy.png";
 
 function resettableStateFactory() {
   return {
@@ -209,7 +211,7 @@ wordGame.setTheme(canines.breeds);
 
 // Execute script once page is fully loaded
 $(document).ready(function() {
-  // Launch the game
+  // Launch the initial game
   wordGame.pickRandomWord();
 
   $("#game-name").text(wordGame.getName());
@@ -280,23 +282,28 @@ $(document).ready(function() {
 
         var randomObj = wordGame.getRandomObj();
 
-        $("#winning-prize").append("<figure>");
-        $("#winning-prize > figure").append("<img>");
-        $("#winning-prize img").attr("src", randomObj.img);
-        $("#winning-prize img").attr("alt", randomObj.word);
-        $("#winning-prize > figure").append("<figcaption>");
-        $("#winning-prize figcaption").text(randomObj.word);
-        $("#winning-prize").append("<details>");
-        $("#winning-prize details").append("<h3>");
-        $("#winning-prize details > h3").text(randomObj.temperament);
-        $("#winning-prize details").append("<p>");
-        $("#winning-prize details > p").text(randomObj.description);
+        // $("#winning-prize-container").append("<figure>");
+        // $("#winning-prize-container > figure").attr("class", "text-center");
+        // $("#winning-prize-container > figure").append("<img>");
+        $("#winning-prize-container img").attr("src", randomObj.img);
+        $("#winning-prize-container img").attr("alt", randomObj.word);
+        $("#winning-prise-container img").css("style", "width: 25vw;");
+        // $("#winning-prize-container img").attr("class", "img-fluid img-thumbnail");
+        // $("#winning-prize-container > figure").append("<figcaption>");
+        $("#winning-prize-container figcaption").text(randomObj.temperament.toUpperCase());
+        // $("#winning-prize-container").append("<details>");
+        // $("#winning-prize-container details").append("<h3>");
+        // $("#winning-prize-container details > h3").text(randomObj.temperament);
+        // $("#winning-prize-container details").append("<p>");
+        // $("#winning-prize-container details > p").text(randomObj.description);
+        $("#game-feedback").attr("class", "win");
         $("#game-feedback").text("WE HAVE A WINNER!");
       }
       // Check for loss.
       else if (wordGame.getGuessesRemaining() < 1) {
         wordGame.setGameOver();
         wordGame.incrementLosses();
+        $("#game-feedback").attr("class", "loss");
         $("#game-feedback").text("You lost this round. Better luck next time.");
       }
 
@@ -306,9 +313,10 @@ $(document).ready(function() {
 
       // Check if game is over.
       if (wordGame.getGameOver()) {
-        $("footer").append("<button>");
-        $("footer > button").attr("type", "button");
-        $("footer > button").text("Play Again!");
+        $("#play-again").append("<button>");
+        $("#play-again > button").attr("type", "button");
+        $("#play-again > button").attr("class", "btn btn-outline-light");
+        $("#play-again > button").text("Play Again!");
       }
 
     }
@@ -324,12 +332,18 @@ $(document).ready(function() {
       wordGame.resetGameState();
       wordGame.pickRandomWord();
 
-      $("#winning-prize").empty();
+      // $("#winning-prize-container").empty();
+      $("#winning-prize-container img").attr("src", willy);
+      $("#winning-prize-container img").attr("alt", "WILLY");
+      $("#winning-prize-container figcaption").empty();
+      $("#winning-prize-container figcaption").append('<div><em>In memory of </em><strong class="text-uppercase">Willy</strong><em>, my furry kid</em></em></div><div>2002 - 2014</div>');
+      $("#winning-prise-container img").css("style", "width: 20vw;");      
       $("#mystery-word").text(wordGame.getPartialWord());
       $("#letters-guessed").text(wordGame.getLettersGuessed());
       $("#guesses-remaining").text(wordGame.getGuessesRemaining());
-      $("#game-feedback").empty();
-      $("footer").empty();
+      $("#game-feedback").text("Here's another round!");
+      $("#game-feedback").attr("class", "normal");
+      $("#play-again").empty();
     }
   });  
 });

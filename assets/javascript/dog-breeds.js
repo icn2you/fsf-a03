@@ -131,7 +131,7 @@ var canines = {
       name: "Miniature Schnauzer",
       temperament: "Friendly, Smart, Obedient",
       description: "The Miniature Schnauzer, the smallest of the three Schnauzer breeds, is a generally healthy, long-lived, and low-shedding companion. Add an outgoing personality, a portable size, and sporty good looks, and you’ve got an ideal family dog.",
-      img: "assets/images/miniature.schnauzer.jpg"
+      img: "assets/images/miniature-schnauzer.jpg"
     },
     {
       word: "Cavalier King Charles Spaniel",
@@ -173,7 +173,7 @@ var canines = {
       name: "Shetland Sheepdog",
       temperament: "Playful, Energetic, Bright",
       description: "The Shetland Sheepdog, also known as the Sheltie, is an extremely intelligent, quick, and obedient herder from Scotland’s remote and rugged Shetland Islands. Shelties bear a strong family resemblance to their bigger cousin, the Collie.",
-      img: "assets/images/shetland-sheepdog.jpg"
+      img: "assets/images/shetland-sheepdog.jpeg"
     },
     {
       word: "Bernese Mountain Dog",

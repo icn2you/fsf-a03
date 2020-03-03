@@ -1,0 +1,214 @@
+/******************************************************************************
+FSWD:  Christopher B. Zenner
+Date:  02/29/2020
+File:  style.css
+Ver.:  0.1.0 20200301
+       0.2.0 20200302
+
+This CSS specifies the layout and style for the basic portfolio site of the
+FSWD.
+*******************************************************************************/
+
+/* Debug */
+/* { border: 1px solid red !important; }
+   { border: 1px solid orange !important; }
+   { border: 1px solid yellow !important; }
+   { border: 1px solid green !important; }
+   { border: 1px solid blue !important; }
+   { border: 1px solid purple !important; }
+*/
+
+/******************************************************************************
+ Global Elements
+*******************************************************************************/
+* {
+  /* Make widths static */
+  box-sizing: border-box;
+}
+
+body {
+  background: #eee;
+  color: #777;
+  /* font: 1em/1.5em 'Open Sans', sans-serif; */
+  font-family: 'Open Sans', sans-serif;
+}
+
+/******************************************************************************
+ Bootstrap Overrides
+*******************************************************************************/
+.jumbotron {
+  /* background: #4aaaa5; */
+  background: #2d918e;
+  color: #eee;
+  height: 40vh;
+  margin-bottom: 0;
+  padding-top: 4vh;
+}
+
+.fixed-bottom {
+  border-top: 5px #138580 solid;
+  height: 10vh;
+}
+
+/******************************************************************************
+ Navigation Elements
+*******************************************************************************/
+a, a:active, a:hover, a:visited {
+  color: #75cac7;
+  font-weight: 600;
+}
+
+/******************************************************************************
+ Header Elements
+*******************************************************************************/
+header .container {
+  padding: 1vw;
+}
+
+h1 {
+  font: bold 4vw 'Underdog', fantasy;
+}
+
+h1::before {
+  content: url("../images/dog-paw-icon-138580.png") " ";
+}
+
+h1::after {
+  content: " " url("../images/dog-paw-icon-138580.png");
+}
+
+h2 {
+  color: #666;
+  font-size: 2vw;
+}
+
+h3 {
+  font-size: 1.5vw;
+}
+
+/******************************************************************************
+ Primary Content Elements
+*******************************************************************************/
+main #winning-prize-container {
+  padding: 0;
+}
+
+main #winning-prize-container img {
+  width: 20vw;
+}
+
+main figcaption {
+  font-size: 1.1vw;
+  font-weight: 600;
+  margin-top: 2vh;
+}
+
+/* TODO: Explore ways to display details info aesthetically. (03/02/2020) */
+main details {
+  visibility: hidden;
+}
+
+main details open {
+  background: #eee;
+  border-radius: 4px;
+  color: #666;
+  padding: 1vh 0;
+  z-index: 1000;
+}
+
+main details > p {
+  font-size: 1vw;
+}
+
+main .game-board-container h2 {
+  color: #fff;
+}
+
+main #mystery-word,
+main #letters-guessed {
+  font: 700 2.5vw Inconsolata, monospace;
+  letter-spacing: 0.5vw;
+  margin: 5vh auto;
+}
+
+main #letters-guessed {
+  font-size: 2vw
+}
+
+main #game-feedback {
+  background: #eee;
+  border-radius: 4px;
+  color: #666;
+  margin: 5vh auto;
+  padding: 1vh 0;
+}
+
+main .loss {
+  color: #d81e23 !important;
+}
+
+main .win {
+  color: #138580 !important;
+}
+
+#play-again > button:active,
+#play-again > button:hover {
+  color: #666;
+}
+
+main #guesses-remaining,
+main #player-wins {
+  color: #666;
+  font-size: 2vw;
+}
+
+main .player-wins-container,
+main .guesses-remaining-container {
+  padding: 4vh 0;
+}
+
+main .player-wins-container {
+  background: #75cac7;
+}
+
+main .guesses-remaining-container {
+  background: #ade6e4;
+}
+
+main .letters-guessed-container {
+  padding: 2vh 0;
+}
+
+/******************************************************************************
+ Footer Elements
+*******************************************************************************/
+footer {
+  background: #666;
+  color: #fff;
+}
+
+footer #copyright {
+  font-size: 1vw;
+  font-weight: 600;
+  margin: 0.75vh 0;
+}
+
+footer #attribution {
+  font-size: 0.9vw;
+}
+
+footer #memoriam {
+  font-size: 0.95vw;
+  margin-top: 2vh;
+  text-align: center;
+}
+
+footer #memoriam p {
+  border-left: 1px solid #ddd;
+  margin: 0 auto;
+}
+
+footer #memoriam-img {
+  margin: 0.5vh 0;
+  padding: 2px;
+}
