@@ -28,21 +28,18 @@ FSWD.
 
 body {
   background: #eee;
-  color: #777;
-  /* font: 1em/1.5em 'Open Sans', sans-serif; */
+  color: #666;
   font-family: 'Open Sans', sans-serif;
 }
 
 /******************************************************************************
- Bootstrap Overrides
+ Bootstrap Components
 *******************************************************************************/
 .jumbotron {
   /* background: #4aaaa5; */
   background: #2d918e;
   color: #eee;
-  height: 40vh;
   margin-bottom: 0;
-  padding-top: 4vh;
 }
 
 .fixed-bottom {
@@ -66,7 +63,7 @@ header .container {
 }
 
 h1 {
-  font: bold 4vw 'Underdog', fantasy;
+  font: bold 2.75rem 'Underdog', fantasy;
 }
 
 h1::before {
@@ -77,28 +74,33 @@ h1::after {
   content: " " url("../images/dog-paw-icon-138580.png");
 }
 
-h2 {
-  color: #666;
-  font-size: 2vw;
+h2 {  
+  font-size: 1.5rem;
 }
 
 h3 {
-  font-size: 1.5vw;
+  font-size: 1.25rem;
 }
 
 /******************************************************************************
  Primary Content Elements
 *******************************************************************************/
+main {
+  /* TODO: Figure this out! (03/03/2020) */
+  height: 90vh;
+}
+
 main #winning-prize-container {
   padding: 0;
 }
 
 main #winning-prize-container img {
-  width: 20vw;
+  /* width: 20vw; */
+  width: 50%;
 }
 
 main figcaption {
-  font-size: 1.1vw;
+  font-size: 0.625rem;
   font-weight: 600;
   margin-top: 2vh;
 }
@@ -113,11 +115,13 @@ main details open {
   border-radius: 4px;
   color: #666;
   padding: 1vh 0;
+  visibility: hidden;
   z-index: 1000;
 }
 
 main details > p {
-  font-size: 1vw;
+  font-size: 1rem;
+  visibility: hidden;
 }
 
 main .game-board-container h2 {
@@ -126,13 +130,13 @@ main .game-board-container h2 {
 
 main #mystery-word,
 main #letters-guessed {
-  font: 700 2.5vw Inconsolata, monospace;
-  letter-spacing: 0.5vw;
+  font: 700 1.75rem Inconsolata, monospace;
+  letter-spacing: 0.1875rem;
   margin: 5vh auto;
 }
 
 main #letters-guessed {
-  font-size: 2vw
+  margin: 2vh auto;
 }
 
 main #game-feedback {
@@ -158,13 +162,12 @@ main .win {
 
 main #guesses-remaining,
 main #player-wins {
-  color: #666;
-  font-size: 2vw;
+  font-size: 1.5rem;
 }
 
 main .player-wins-container,
 main .guesses-remaining-container {
-  padding: 4vh 0;
+  padding: 2vh 0;
 }
 
 main .player-wins-container {
@@ -188,27 +191,11 @@ footer {
 }
 
 footer #copyright {
-  font-size: 1vw;
+  font-size: 0.625rem;
   font-weight: 600;
-  margin: 0.75vh 0;
+  margin: 1vh 0;
 }
 
 footer #attribution {
-  font-size: 0.9vw;
-}
-
-footer #memoriam {
-  font-size: 0.95vw;
-  margin-top: 2vh;
-  text-align: center;
-}
-
-footer #memoriam p {
-  border-left: 1px solid #ddd;
-  margin: 0 auto;
-}
-
-footer #memoriam-img {
-  margin: 0.5vh 0;
-  padding: 2px;
+  font-size: 0.5625rem;
 }
