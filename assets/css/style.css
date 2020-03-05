@@ -38,8 +38,11 @@ body {
 .jumbotron {
   /* background: #4aaaa5; */
   background: #2d918e;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   color: #eee;
   margin-bottom: 0;
+  padding: 2rem; /* Bootstrap override */
 }
 
 .fixed-bottom {
@@ -85,22 +88,45 @@ h3 {
 /******************************************************************************
  Primary Content Elements
 *******************************************************************************/
-main {
+main.container {
   /* TODO: Figure this out! (03/03/2020) */
-  height: 90vh;
+  margin-bottom: 12vh;
+}
+
+main .container-md {
+  padding: 0 auto;
 }
 
 main #winning-prize-container {
   padding: 0;
 }
 
+main .photo-box {
+  position: relative;
+}
+
+.photo-label {
+  /* background: #4aaaa5;
+  color: #fff; */
+  background: #fff;
+  bottom: 0.3125rem;
+  color: #138580;
+  display: block;
+  left: 12%;
+  opacity: 65%;
+  padding: 0.625rem 0;
+  position: absolute;
+  text-align: center;
+  width: 76%;
+}
+
 main #winning-prize-container img {
   /* width: 20vw; */
-  width: 50%;
+  width: 76%;
 }
 
 main figcaption {
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   font-weight: 600;
   margin-top: 2vh;
 }
@@ -132,18 +158,18 @@ main #mystery-word,
 main #letters-guessed {
   font: 700 1.75rem Inconsolata, monospace;
   letter-spacing: 0.1875rem;
-  margin: 5vh auto;
+  margin: 10vh auto;
 }
 
 main #letters-guessed {
-  margin: 2vh auto;
+  margin: 0 auto;
 }
 
 main #game-feedback {
   background: #eee;
   border-radius: 4px;
   color: #666;
-  margin: 5vh auto;
+  margin-bottom: 4vh;
   padding: 1vh 0;
 }
 
@@ -172,10 +198,12 @@ main .guesses-remaining-container {
 
 main .player-wins-container {
   background: #75cac7;
+  border-bottom-left-radius: 6px;
 }
 
 main .guesses-remaining-container {
   background: #ade6e4;
+  border-bottom-right-radius: 6px;
 }
 
 main .letters-guessed-container {

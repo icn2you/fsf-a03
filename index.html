@@ -13,11 +13,11 @@
   <link rel="shortcut icon" type="image/png" href="assets/images/dog-paw-4aaaa5.png">
   
   <!-- Fonts
-    Inconsolata, Montserrat, Open Sans & Underdog courtesy of Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700|Montserrat:400,400i,500,500i|Open+Sans:400,400i,600,600i|Underdog&display=swap" rel="stylesheet">
+    Inconsolata, Open Sans & Underdog courtesy of Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:400,400i,600,600i|Underdog&display=swap" rel="stylesheet">
   
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <!-- Site-specific Styles -->
   <link rel="stylesheet" href="assets/css/style.css">
   <!-- Temporary Styles -->
@@ -27,9 +27,6 @@
     .debug-border { border: 1px solid red; }
     #mystery-word { letter-spacing: 3px; } */
   </style>
-  
-  <!-- jQuery 3.2.1 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <!--================================= BODY =================================-->
 <body>
@@ -46,14 +43,14 @@
   </header>
 
   <!-- Primary Content -->
-  <main>
+  <main class="container">
     <div class="jumbotron jumbotron-fluid">
-      <div class="container-sm">
+      <div class="container-md">
         <div class="row">
-          <div class="col-sm-6" id="winning-prize-container">
-            <figure class="text-center">
+          <div class="col-md-6" id="winning-prize-container">
+            <figure class="photo-box text-center">
               <img src="assets/images/willy.png" alt="Willy" class="img-fluid img-thumbnail">
-              <figcaption>
+              <figcaption class="photo-label">
                 <div>
                   <em>In memory of </em><strong class="text-uppercase">Willy</strong><em>, my furry kid</em></em>
                 </div>
@@ -61,7 +58,7 @@
               </figcaption>
             </figure>
           </div>
-          <div class="col-sm-6 text-center game-board-container">
+          <div class="col-md-6 text-center game-board-container">
             <h2>Mystery Word</h2>
             <div id="mystery-word"></div>
             <div id="game-feedback"></div>
@@ -104,11 +101,11 @@
     </div>
   </footer>
 
-  <!-- Bootstrap JavaScript -->
+  <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> 
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <!-- Word Game Engine JS -->
   <script src="assets/javascript/dog-breeds.js"></script>
   <script src="assets/javascript/game.js"></script>
