@@ -4,8 +4,10 @@ Date:  02/29/2020
 File:  game.js
 Ver.:  0.1.0 20200229
        0.2.0 20200302
+       0.3.0 20200305
 This JS script implements a hangman-style game with a changeable dataset.
 ******************************************************************************/
+const dataset = canines.breeds;
 const maxGuesses = 20;
 const willy = "assets/images/willy.png";
 
@@ -207,7 +209,18 @@ var wordGame = {
   }    
 };
 
-wordGame.setTheme(canines.breeds);
+function giveUserFeedback(feedback, classVal) {
+  // DEBUG
+  // console.log("class value:" + classVal);
+  
+  if (classVal != null) {
+    $("#game-feedback").attr("class", classVal);
+  }
+
+  $("#game-feedback").text(feedback);
+};
+
+wordGame.setTheme(dataset);
 
 // Execute script once page is fully loaded
 $(document).ready(function() {
@@ -218,54 +231,33 @@ $(document).ready(function() {
   $("#mystery-word").text(wordGame.getPartialWord());
   $("#guesses-remaining").text(wordGame.getGuessesRemaining());
   $("#player-wins").text(wordGame.getWins());
-  $("#game-feedback").text(wordGame.getInstructions());
+  giveUserFeedback(wordGame.getInstructions());
 
   $(document).keyup(function(event) {
     // DEBUG
     // alert("You pressed the " + event.key + " key!");
    
     // Don't allow further input if game is over.
-    if (wordGame.getGameOver() ||
-        // Ignore scrupulous users trying to input capital letters!  
-        event.key === "Shift" ||
-        // ... and other non-printing characters ...
-        // TODO: Find a more elegant way to do this! (02/29/2020)
-        event.key === "Alt" ||
-        event.key === "Backspace" ||
-        event.key === "CapsLock" ||
-        event.key === "Control" ||
-        event.key === "Delete" ||
-        event.key === "Home" ||
-        event.key === "End" ||
-        event.key === "Enter" ||
-        event.key === "Escape" ||
-        event.key === "Home" ||
-        event.key === "Meta" ||
-        event.key.substr(0, 5) === "Arrow" ||
-        event.key.substr(0, 2) === "F1" ||
-        event.key.substr(0, 2) === "F2" ||
-        event.key.substr(0, 2) === "F3" ||
-        event.key.substr(0, 2) === "F4" ||
-        event.key.substr(0, 2) === "F5" ||
-        event.key.substr(0, 2) === "F6" ||
-        event.key.substr(0, 2) === "F7" ||
-        event.key.substr(0, 2) === "F8" ||
-        event.key.substr(0, 2) === "F9" ||
-        event.key.substr(0, 4) === "Page") { 
+    if (wordGame.getGameOver()) { 
       return;
     }
-    // Only accept valid user input. 
-    else if (event.key.match("[a-zA-Z\-]")) {
+    // Only accept valid user input (*i.e.*, alphabetic letters)
+    else if (event.key.length === 1 && 
+            (event.key.charCodeAt(0) >= 97 && event.key.charCodeAt(0) <= 122)) {
+      // DEBUG
+      // console.log(event.key.charCodeAt(0));
+
+      (event.key.charCodeAt(0));
       if(wordGame.isLtrInGuesses(event.key)) {
-        $("#game-feedback").text("Letter already guessed.");
+        giveUserFeedback("Letter already guessed.");
         return;
       }
 
       if (wordGame.isLtrInWord(event.key)) {
-        $("#game-feedback").text("Great job! Keep going.");
+        giveUserFeedback("Great job! Keep going.");
       } 
       else {
-        $("#game-feedback").text("Oops! Bad guess. Try again.");
+        giveUserFeedback("Oops! Bad guess. Try again.");
       }
 
       wordGame.decrementGuesses();   
@@ -276,35 +268,26 @@ $(document).ready(function() {
       $("#guesses-remaining").text(wordGame.getGuessesRemaining());
 
       // Check for a win!
-      if (!wordGame.getPartialWord().includes("_")) {
+      if (!(wordGame.getPartialWord().includes("_"))) {
         wordGame.setGameOver();
         wordGame.incrementWins();
 
         var randomObj = wordGame.getRandomObj();
 
-        // $("#winning-prize-container").append("<figure>");
-        // $("#winning-prize-container > figure").attr("class", "text-center");
-        // $("#winning-prize-container > figure").append("<img>");
-        $("#winning-prize-container img").attr("src", randomObj.img);
-        $("#winning-prize-container img").attr("alt", randomObj.word);
-        $("#winning-prise-container img").css("style", "width: 25vw;");
-        // $("#winning-prize-container img").attr("class", "img-fluid img-thumbnail");
-        // $("#winning-prize-container > figure").append("<figcaption>");
+        $("#winning-prize-container img").attr({
+          src: randomObj.img,
+          alt: randomObj.word
+        });
         $("#winning-prize-container figcaption").text(randomObj.temperament.toUpperCase());
-        // $("#winning-prize-container").append("<details>");
-        // $("#winning-prize-container details").append("<h3>");
-        // $("#winning-prize-container details > h3").text(randomObj.temperament);
-        // $("#winning-prize-container details").append("<p>");
-        // $("#winning-prize-container details > p").text(randomObj.description);
-        $("#game-feedback").attr("class", "win");
-        $("#game-feedback").text("WE HAVE A WINNER!");
+
+        giveUserFeedback("WE HAVE A WINNER!", "win");
       }
       // Check for loss.
       else if (wordGame.getGuessesRemaining() < 1) {
         wordGame.setGameOver();
         wordGame.incrementLosses();
-        $("#game-feedback").attr("class", "loss");
-        $("#game-feedback").text("You lost this round. Better luck next time.");
+    
+        giveUserFeedback("You lost this round. Better luck next time.", "loss");
       }
 
       var gamesPlayed = wordGame.getWins() + wordGame.getLosses();
@@ -314,15 +297,17 @@ $(document).ready(function() {
       // Check if game is over.
       if (wordGame.getGameOver()) {
         $("#play-again").append("<button>");
-        $("#play-again > button").attr("type", "button");
-        $("#play-again > button").attr("class", "btn btn-outline-light");
+        $("#play-again > button").attr({
+          type: "button",
+          class: "btn btn-outline-light"
+        });
         $("#play-again > button").text("Play Again!");
       }
 
     }
     // Notify user input was invalid. 
     else {
-      $("#game-feedback").text("Oops! Invalid character pressed. Try again.");
+      giveUserFeedback("Oops! Invalid character pressed. Try again.");
     }
   });
 
@@ -332,17 +317,18 @@ $(document).ready(function() {
       wordGame.resetGameState();
       wordGame.pickRandomWord();
 
-      // $("#winning-prize-container").empty();
-      $("#winning-prize-container img").attr("src", willy);
-      $("#winning-prize-container img").attr("alt", "WILLY");
+      $("#winning-prize-container img").attr({
+        src: willy,
+        alt: "WILLY"
+      });
       $("#winning-prize-container figcaption").empty();
-      $("#winning-prize-container figcaption").append('<div><em>In memory of </em><strong class="text-uppercase">Willy</strong><em>, my furry kid</em></em></div><div>2002 - 2014</div>');
-      $("#winning-prise-container img").css("style", "width: 20vw;");      
+      $("#winning-prize-container figcaption").append('<div><em>In memory of </em><strong class="text-uppercase">Willy</strong><em>, my furry kid</em></em></div><div>2002 - 2014</div>');      
       $("#mystery-word").text(wordGame.getPartialWord());
       $("#letters-guessed").text(wordGame.getLettersGuessed());
       $("#guesses-remaining").text(wordGame.getGuessesRemaining());
-      $("#game-feedback").text("Here's another round!");
-      $("#game-feedback").attr("class", "normal");
+      
+      giveUserFeedback("Here's another round!", "normal");
+      
       $("#play-again").empty();
     }
   });  
