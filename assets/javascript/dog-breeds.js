@@ -3,6 +3,7 @@ FSWD:  Christopher B. Zenner
 Date:  02/29/2020
 File:  theme.js
 Ver.:  0.1.0 20200229
+
 This JS script provides the word data for a hangman-style game.
 ******************************************************************************/
 var canines = {

@@ -5,6 +5,7 @@ File:  game.js
 Ver.:  0.1.0 20200229
        0.2.0 20200302
        0.3.0 20200305
+       
 This JS script implements a hangman-style game with a changeable dataset.
 ******************************************************************************/
 const dataset = canines.breeds;
