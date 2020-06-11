@@ -1,7 +1,7 @@
 # Assignment 03: Word Guess Game (Challenge)
 ## [The Coding Boot Camp @ UCLA Extension](https://bootcamp.uclaextension.edu/coding/)
 
-![Assigment 03 Landing Page](./assets/images/fsf-word-guess-game.png "Assignment 03 Landing Page")
+![Word Guess Game Demo Video](./assets/images/fsf-word-guess-game.gif "Word Guess Game Demo Video")
 
 ### Summary
 
@@ -36,12 +36,6 @@ The `wordGame` object contains appropriate setters and getters in addition to th
 ### Frontend
 
 The frontend is built with Bootstrap and jQuery. The Inconsolata, Open Sans & Underdog fonts are served by Google Fonts, and Paletton is responsible for the color palette.
-
-### Example
-
-The following video exhibits both a winning round and a losing round of the game:
-
-![Assigment 03 Example Video](./assets/images/fsf-word-guess-game.gif "Assignment 03 Example Video")
 
 ### Technologies
 
