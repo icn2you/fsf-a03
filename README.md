@@ -39,5 +39,6 @@ The frontend is built with Bootstrap and jQuery. The Inconsolata, Open Sans & Un
 
 ### Technologies
 
-- Languages: HTML, CSS & JavaScript (ES6)
-- Tools: [Bootstrap](https://getbootstrap.com/), [jQuery](https://jquery.com/), [Babel](https://babeljs.io/), [Visual Studio Code](https://code.visualstudio.com/), [Chrome Dev Tools](https://developer.chrome.com/devtools), [W3C Markup Validation Service](https://validator.w3.org/) & [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/)
+- Programming Languages: HTML, CSS & JavaScript (ES6)
+- APIs/Frameworks/Libraries: [Bootstrap](https://getbootstrap.com/), [jQuery](https://jquery.com/) & [Babel](https://babeljs.io/) 
+- Build Tools: [Visual Studio Code](https://code.visualstudio.com/), [Chrome Dev Tools](https://developer.chrome.com/devtools), [W3C Markup Validation Service](https://validator.w3.org/) & [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/)
